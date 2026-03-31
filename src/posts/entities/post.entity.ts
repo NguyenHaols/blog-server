@@ -31,8 +31,8 @@ export class Post {
   @Column({ type: 'text' })
   content: string;
 
-  @Column({ nullable: true })
-  thumbnail_url: string;
+  @Column({ name: 'thumbnail_url', nullable: true })
+  thumbnailUrl: string;
 
   @Column({
     type: 'enum',
@@ -41,18 +41,18 @@ export class Post {
   })
   status: PostStatus;
 
-  @Column({ default: 0 })
-  view_count: number;
+  @Column({ name: 'view_count', default: 0 })
+  viewCount: number;
 
-  @Column()
-  author_id: string;
+  @Column({ name: 'author_id' })
+  authorId: string;
 
   @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn({ name: 'author_id' })
   author: User;
 
-  @Column({ nullable: true })
-  category_id: number;
+  @Column({ name: 'category_id', nullable: true })
+  categoryId: number;
 
   @ManyToOne(() => Category, (category) => category.posts, { nullable: true })
   @JoinColumn({ name: 'category_id' })
@@ -66,12 +66,12 @@ export class Post {
   })
   tags: Tag[];
 
-  @Column({ type: 'timestamp', nullable: true })
-  published_at: Date;
+  @Column({ name: 'published_at', type: 'timestamp', nullable: true })
+  publishedAt: Date;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 }

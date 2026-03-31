@@ -21,13 +21,13 @@ export class CreatePostDto {
 
   @IsString()
   @IsOptional()
-  thumbnail_url?: string;
+  thumbnailUrl?: string;
 
   @IsUUID()
   @IsNotEmpty({ message: 'Thiếu ID của tác giả' })
-  author_id: string;
+  authorId: string;
 
   @IsInt()
   @IsOptional()
-  category_id?: number;
+  categoryId?: number;
 }

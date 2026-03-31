@@ -13,16 +13,17 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ nullable: true, unique: true })
-  auth0_id: string;
+  @Column({ name: 'auth0_id', nullable: true, unique: true })
+  auth0Id: string;
 
+  @Column()
   username: string;
 
   @Column({ unique: true })
   email: string;
 
-  @Column()
-  password_hash: string;
+  @Column({ name: 'password_hash' })
+  passwordHash: string;
 
   @Column({
     type: 'enum',
@@ -31,11 +32,11 @@ export class User {
   })
   role: Role;
 
-  @Column({ nullable: true })
-  avatar_url: string;
+  @Column({ name: 'avatar_url', nullable: true })
+  avatarUrl: string;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
   @OneToMany(() => Post, (post) => post.author)
   posts: Post[];

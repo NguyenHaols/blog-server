@@ -21,8 +21,8 @@ export class Category {
   @Column({ nullable: true })
   description: string;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
   @OneToMany(() => Post, (post) => post.category)
   posts: Post[];

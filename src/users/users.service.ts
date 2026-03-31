@@ -33,7 +33,7 @@ export class UsersService {
 
     const user = this.userRepository.create({
       ...rest,
-      password_hash,
+      passwordHash: password_hash,
     });
 
     const savedUser = await this.userRepository.save(user);
@@ -43,7 +43,7 @@ export class UsersService {
       username: savedUser.username,
       email: savedUser.email,
       role: savedUser.role,
-      created_at: savedUser.created_at,
+      createdAt: savedUser.createdAt,
     };
   }
 
@@ -64,10 +64,7 @@ export class UsersService {
 
     if (updateUserDto.password) {
       const saltRounds = 10;
-      user.password_hash = await bcrypt.hash(
-        updateUserDto.password,
-        saltRounds,
-      );
+      user.passwordHash = await bcrypt.hash(updateUserDto.password, saltRounds);
     }
 
     Object.assign(user, { ...updateUserDto });
@@ -88,7 +85,7 @@ export class UsersService {
       where: { email: loginDto.email },
     });
     if (!user) throw new NotFoundException('Không tìm thấy người dùng này');
-    const isMatch = await bcrypt.compare(loginDto.password, user.password_hash);
+    const isMatch = await bcrypt.compare(loginDto.password, user.passwordHash);
     if (!isMatch) throw new NotFoundException('Sai mật khẩu');
 
     const payload = { sub: user.id, username: user.username };

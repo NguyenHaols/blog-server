@@ -43,5 +43,5 @@ export class CreateUserDto {
 
   @IsString()
   @IsOptional()
-  avatar_url?: string;
+  avatarUrl?: string;
 }
