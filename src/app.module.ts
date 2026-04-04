@@ -3,14 +3,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CategoriesModule } from './categories/categories.module';
-import { PostsModule } from './posts/posts.module';
-import { UsersModule } from './users/users.module';
-import { TagsModule } from './tags/tags.module';
-import { User } from './users/entities/user.entity';
-import { Category } from './categories/entities/category.entity';
-import { Tag } from './tags/entities/tag.entity';
-import { Post } from './posts/entities/post.entity';
+import { CategoriesModule } from './modules/categories/categories.module';
+import { PostsModule } from './modules/posts/posts.module';
+import { UsersModule } from './modules/users/users.module';
+import { TagsModule } from './modules/tags/tags.module';
+import { User } from './modules/users/entities/user.entity';
+import { Category } from './modules/categories/entities/category.entity';
+import { Tag } from './modules/tags/entities/tag.entity';
+import { Post } from './modules/posts/entities/post.entity';
+import { StorageModule } from './modules/storage/storage.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { Post } from './posts/entities/post.entity';
     PostsModule,
     UsersModule,
     TagsModule,
+    StorageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
