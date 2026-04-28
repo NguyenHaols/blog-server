@@ -1,9 +1,12 @@
 import {
+  IsArray,
+  IsEnum,
   IsNotEmpty,
   IsOptional,
   IsString,
   IsUUID,
 } from 'class-validator';
+import { PostStatus } from '../../../common/enums';
 
 export class CreatePostDto {
   @IsString()
@@ -23,10 +26,15 @@ export class CreatePostDto {
   thumbnailUrl?: string;
 
   @IsUUID()
-  @IsNotEmpty({ message: 'Thiếu ID của tác giả' })
-  authorId: string;
-
-  @IsUUID()
   @IsOptional()
   categoryId?: string;
+
+  @IsArray()
+  @IsUUID('4', { each: true })
+  @IsOptional()
+  tagIds?: string[];
+
+  @IsEnum(PostStatus)
+  @IsOptional()
+  status?: PostStatus;
 }

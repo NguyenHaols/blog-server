@@ -6,40 +6,48 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { CategoriesService } from './services/categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { ApiResponse } from '../../common/classes/api-response.class';
+import { QueryCategoryDto } from './dto/query-category.dto';
 
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
   @Post()
-  create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.categoriesService.create(createCategoryDto);
+  async create(@Body() createCategoryDto: CreateCategoryDto) {
+    const data = await this.categoriesService.create(createCategoryDto);
+    return ApiResponse.success(data, 'Category created successfully');
   }
 
   @Get()
-  findAll() {
-    return this.categoriesService.findAll();
+  async findAll(@Query() query: QueryCategoryDto) {
+    const data = await this.categoriesService.findAll(query);
+    return ApiResponse.success(data, 'Categories retrieved successfully');
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.categoriesService.findOne(id);
+  async findOne(@Param('id') id: string) {
+    const data = await this.categoriesService.findOne(id);
+    return ApiResponse.success(data, 'Category retrieved successfully');
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
   ) {
-    return this.categoriesService.update(id, updateCategoryDto);
+    const data = await this.categoriesService.update(id, updateCategoryDto);
+    return ApiResponse.success(data, 'Category updated successfully');
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.categoriesService.remove(id);
+  async remove(@Param('id') id: string) {
+    const data = await this.categoriesService.remove(id);
+    return ApiResponse.success(data, 'Category deleted successfully');
   }
 }

@@ -16,8 +16,8 @@ export class User extends BaseUuidEntity {
   email: string;
 
   @Exclude()
-  @Column({ name: 'password_hash' })
-  passwordHash: string;
+  @Column({ name: 'password_hash', type: 'varchar', nullable: true })
+  passwordHash: string | null;
 
   @Column({
     type: 'enum',

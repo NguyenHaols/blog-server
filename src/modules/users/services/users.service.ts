@@ -113,6 +113,12 @@ export class UsersService {
       where: { email: loginDto.email },
     });
     if (!user) throw new NotFoundException('Không tìm thấy người dùng này');
+    if (!user.passwordHash) {
+      throw new BadRequestException(
+        'Tài khoản này sử dụng đăng nhập qua Auth0. Hãy đăng nhập bằng phương thức tương ứng.',
+      );
+    }
+
     const isMatch = await bcrypt.compare(loginDto.password, user.passwordHash);
     if (!isMatch) throw new NotFoundException('Sai mật khẩu');
 
