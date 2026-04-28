@@ -21,19 +21,19 @@ export class CategoriesService {
     return this.categoryRepository.find();
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const category = await this.categoryRepository.findOne({ where: { id } });
     if (!category) throw new NotFoundException('Category not found');
     return category;
   }
 
-  async update(id: number, updateCategoryDto: UpdateCategoryDto) {
+  async update(id: string, updateCategoryDto: UpdateCategoryDto) {
     const category = await this.findOne(id);
     Object.assign(category, updateCategoryDto);
     return this.categoryRepository.save(category);
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const category = await this.findOne(id);
     return this.categoryRepository.remove(category);
   }

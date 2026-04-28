@@ -14,6 +14,9 @@ import { JwtService } from '@nestjs/jwt';
 import { UserResponseDto } from '../../posts/dto/user-response.dto';
 import { StorageService } from '../../storage/services/storage.service';
 import { ConfigService } from '@nestjs/config';
+import { PaginationResponse } from 'src/common/classes/api-response-pagination.class';
+import { QueryUserDto } from '../dto/query-user.dto';
+import { UserQueryService } from './user.query.service';
 
 @Injectable()
 export class UsersService {
@@ -24,6 +27,7 @@ export class UsersService {
     private jwtService: JwtService,
     private storageService: StorageService,
     private configService: ConfigService,
+    private userQueryService: UserQueryService,
   ) {
     this.rs2PublicUrl = this.configService.get<string>('R2_PUBLIC_URL')!;
   }
@@ -46,8 +50,21 @@ export class UsersService {
     return await this.userRepository.save(user);
   }
 
-  findAll(): Promise<User[]> {
-    return this.userRepository.find();
+  async findAll(
+    query: QueryUserDto,
+  ): Promise<PaginationResponse<UserResponseDto>> {
+    const { page, pageSize } = query;
+    const queryList = this.userQueryService.createQueryList(query);
+    const [items, totalItems] = await queryList.getManyAndCount();
+
+    return new PaginationResponse({
+      items,
+      metadata: {
+        page,
+        pageSize,
+        totalItems,
+      },
+    });
   }
 
   async findOne(id: string): Promise<User> {

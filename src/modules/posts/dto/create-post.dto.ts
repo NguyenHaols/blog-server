@@ -1,5 +1,4 @@
 import {
-  IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -27,7 +26,7 @@ export class CreatePostDto {
   @IsNotEmpty({ message: 'Thiếu ID của tác giả' })
   authorId: string;
 
-  @IsInt()
+  @IsUUID()
   @IsOptional()
-  categoryId?: number;
+  categoryId?: string;
 }

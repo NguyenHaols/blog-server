@@ -5,6 +5,7 @@ import { UsersService } from './services/users.service';
 import { UsersController } from './users.controller';
 import { User } from './entities/user.entity';
 import { StorageModule } from '../storage/storage.module';
+import { UserQueryService } from './services/user.query.service';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { StorageModule } from '../storage/storage.module';
     StorageModule,
   ],
   controllers: [UsersController],
-  providers: [UsersService],
-  exports: [UsersService],
+  providers: [UsersService, UserQueryService],
+  exports: [UsersService, UserQueryService],
 })
 export class UsersModule {}

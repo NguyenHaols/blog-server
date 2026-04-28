@@ -9,3 +9,8 @@ export enum PostStatus {
   PUBLISHED = 'PUBLISHED',
   ARCHIVED = 'ARCHIVED',
 }
+
+export enum OrderDirection {
+  ASC = 'ASC',
+  DESC = 'DESC',
+}

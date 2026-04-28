@@ -1,17 +1,9 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  OneToMany,
-} from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
 import { Post } from '../../posts/entities/post.entity';
+import { BaseUuidEntity } from '../../../common/entities/base.entity';
 
 @Entity('categories')
-export class Category {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Category extends BaseUuidEntity {
   @Column()
   name: string;
 
@@ -20,9 +12,6 @@ export class Category {
 
   @Column({ nullable: true })
   description: string;
-
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
 
   @OneToMany(() => Post, (post) => post.category)
   posts: Post[];

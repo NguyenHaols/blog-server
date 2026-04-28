@@ -12,6 +12,9 @@ import { Category } from './modules/categories/entities/category.entity';
 import { Tag } from './modules/tags/entities/tag.entity';
 import { Post } from './modules/posts/entities/post.entity';
 import { StorageModule } from './modules/storage/storage.module';
+import { AuthModule } from './modules/auth/auth.module';
+// import { APP_GUARD } from '@nestjs/core';
+// import { AuthGuard } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -19,7 +22,7 @@ import { StorageModule } from './modules/storage/storage.module';
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
+      imports: [ConfigModule, AuthModule],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         url: configService.get<string>('DATABASE_URL'),
@@ -28,6 +31,7 @@ import { StorageModule } from './modules/storage/storage.module';
       }),
       inject: [ConfigService],
     }),
+    AuthModule,
     CategoriesModule,
     PostsModule,
     UsersModule,
@@ -35,6 +39,7 @@ import { StorageModule } from './modules/storage/storage.module';
     StorageModule,
   ],
   controllers: [AppController],
+  // providers: [AppService, { provide: APP_GUARD, useClass: AuthGuard('jwt') }],
   providers: [AppService],
 })
 export class AppModule {}

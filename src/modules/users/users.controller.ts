@@ -6,12 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './services/users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginDto } from './dto/login-user.dto';
 import { ApiResponse } from '../../common/classes/api-response.class';
+import { QueryUserDto } from './dto/query-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -24,8 +26,8 @@ export class UsersController {
   }
 
   @Get()
-  async findAll() {
-    const data = await this.usersService.findAll();
+  async findAll(@Query() query: QueryUserDto) {
+    const data = await this.usersService.findAll(query);
     return ApiResponse.success(data, 'Users retrieved successfully');
   }
 

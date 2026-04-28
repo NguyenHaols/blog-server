@@ -1,19 +1,11 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  OneToMany,
-} from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
 import { Role } from '../../../common/enums';
 import { Post } from '../../posts/entities/post.entity';
 import { Exclude } from 'class-transformer';
+import { BaseUuidEntity } from '../../../common/entities/base.entity';
 
 @Entity('users')
-export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class User extends BaseUuidEntity {
   @Column({ name: 'auth0_id', nullable: true, unique: true })
   auth0Id: string;
 
@@ -36,9 +28,6 @@ export class User {
 
   @Column({ name: 'avatar_url', nullable: true })
   avatarUrl: string;
-
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
 
   @OneToMany(() => Post, (post) => post.author)
   posts: Post[];
