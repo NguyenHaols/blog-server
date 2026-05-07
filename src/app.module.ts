@@ -28,6 +28,7 @@ import { AuthModule } from './modules/auth/auth.module';
         url: configService.get<string>('DATABASE_URL'),
         entities: [User, Category, Tag, Post],
         synchronize: false,
+        timezone: '+07:00',
       }),
       inject: [ConfigService],
     }),

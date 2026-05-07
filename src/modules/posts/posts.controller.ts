@@ -37,6 +37,15 @@ export class PostsController {
     return ApiResponse.success(data, 'Lấy danh sách bài viết thành công');
   }
 
+  @Get('slug/:slug')
+  async findBySlug(@Param('slug') slug: string) {
+    const data = await this.postsService.findBySlug(slug);
+    return ApiResponse.success(
+      data,
+      'Lấy chi tiết bài viết theo slug thành công',
+    );
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const data = await this.postsService.findOne(id);

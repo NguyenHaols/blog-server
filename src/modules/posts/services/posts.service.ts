@@ -64,6 +64,15 @@ export class PostsService {
     return post;
   }
 
+  async findBySlug(slug: string) {
+    const post = await this.postRepository.findOne({
+      where: { slug },
+      relations: ['author', 'category', 'tags'],
+    });
+    if (!post) throw new NotFoundException(`Post with slug ${slug} not found`);
+    return post;
+  }
+
   async update(id: string, updatePostDto: UpdatePostDto) {
     const post = await this.findOne(id);
     const { tagIds, ...postData } = updatePostDto;
